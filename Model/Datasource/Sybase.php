@@ -19,9 +19,6 @@ App::uses('DboSource', 'Model/Datasource');
  * A Dbo layer for MS SQL Server 2005 and higher. Requires the
  * `pdo_dblib` extension to be enabled.
  *
- * @link http://www.php.net/manual/en/ref.pdo-sqlsrv.php
- *
- * @package       Cake.Model.Datasource.Database
  */
 class Sybase extends DboSource {
 
@@ -68,12 +65,11 @@ class Sybase extends DboSource {
  */
 	protected $_baseConfig = array(
 		'persistent' => true,
-		'host' => 'localhost\SQLEXPRESS',
+		'host' => '',
 		'login' => '',
 		'password' => '',
 		'database' => 'cake',
 		'schema' => '',
-		'flags' => array()
 	);
 
 /**
@@ -150,7 +146,7 @@ class Sybase extends DboSource {
 	}
 
 /**
- * Check that PDO SQL Server is installed/loaded
+ * Check that PDO DBLib is installed/loaded
  *
  * @return bool
  */
