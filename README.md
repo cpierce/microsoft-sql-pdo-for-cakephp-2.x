@@ -20,12 +20,15 @@ Download the package zipball/tarball and unzip to the `app/Plugin` folder.
 Rename the folder you copied in to `SybaseDB` 
 
 Enable the Plugin in your `app/Config/bootstrap.php` file:
+
     <?php
     CakePlugin::load('SybaseDB');
+
     
 If you are already using `CakePlugin::loadAll();`, then this step is not necessary.
 
 Configure a database connection in `app/Config/database.php` file:
+
     <?php
     class DATABASE_CONFIG {
 
@@ -40,11 +43,14 @@ Configure a database connection in `app/Config/database.php` file:
 
     }
 
+
 You could also use another connection instead of `$default` and then specifying `$useDbConfig` in your model.
 
 From here you can now access the data the normal cakePHP way:
+
     <?php
         $this->Model->find('first');
+
         
 
 ### Credit where it is due ###
