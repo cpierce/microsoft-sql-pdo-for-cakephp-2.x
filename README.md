@@ -34,7 +34,6 @@ Configure a database connection in `app/Config/database.php` file:
 
 	    public $default = array(
 		    'datasource' => 'SybaseDB.Sybase',
-            'persistent' => false,
             'host' => 'someplace\SQLEXPRESS',
             'login' => 'somelogin',
             'password' => 'Ur_P4ssw0rd#',
