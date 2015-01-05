@@ -1,24 +1,32 @@
 <?php
 /**
- * Sybase PDO layer for DBO
+ * MS SQL Server layer for DBO
+ *
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Chris Pierce (http://cpierce.org)
- * @link          http://cpierce.org Cpierce Website
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @package       Cake.Model.Datasource.Database
+ * @since         CakePHP(tm) v 0.10.5.1790
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
 App::uses('DboSource', 'Model/Datasource');
 
 /**
- * Dbo layer for Sybase PDO driver
+ * Dbo layer for Microsoft's official SQLServer driver
  *
  * A Dbo layer for MS SQL Server 2005 and higher. Requires the
- * `pdo_dblib` extension to be enabled.
+ * `pdo_sqlsrv` extension to be enabled.
  *
+ * @link http://www.php.net/manual/en/ref.pdo-sqlsrv.php
+ *
+ * @package       Cake.Model.Datasource.Database
  */
 class Sybase extends DboSource {
 
@@ -65,11 +73,12 @@ class Sybase extends DboSource {
  */
 	protected $_baseConfig = array(
 		'persistent' => true,
-		'host' => '',
+		'host' => 'localhost\SQLEXPRESS',
 		'login' => '',
 		'password' => '',
 		'database' => 'cake',
 		'schema' => '',
+		'flags' => array()
 	);
 
 /**
@@ -146,7 +155,7 @@ class Sybase extends DboSource {
 	}
 
 /**
- * Check that PDO DBLib is installed/loaded
+ * Check that PDO SQL Server is installed/loaded
  *
  * @return bool
  */
@@ -606,6 +615,7 @@ class Sybase extends DboSource {
 	public function fetchResult() {
 		if ($row = $this->_result->fetch(PDO::FETCH_NUM)) {
 			$resultRow = array();
+            
 			foreach ($this->map as $col => $meta) {
 				list($table, $column, $type) = $meta;
 				if ($table === 0 && $column === self::ROW_COUNTER) {
@@ -748,6 +758,7 @@ class Sybase extends DboSource {
 		$sql = trim($sql);
 		if (strncasecmp($sql, 'SELECT', 6) === 0 || preg_match('/^EXEC(?:UTE)?\s/mi', $sql) > 0) {
 			$prepareOptions += array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL);
+			
 			return parent::_execute($sql, $params, $prepareOptions);
 		}
 		try {
