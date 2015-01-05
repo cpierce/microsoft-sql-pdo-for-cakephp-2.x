@@ -1,32 +1,23 @@
 <?php
 /**
- * MS SQL Server layer for DBO
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * PDO Sybase layer for DBO
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       Cake.Model.Datasource.Database
- * @since         CakePHP(tm) v 0.10.5.1790
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
 App::uses('DboSource', 'Model/Datasource');
 
 /**
- * Dbo layer for Microsoft's official SQLServer driver
+ * Dbo layer for Microsoft's Sybase PDO dblib driver
  *
  * A Dbo layer for MS SQL Server 2005 and higher. Requires the
- * `pdo_sqlsrv` extension to be enabled.
+ * `pdo_dblib` extension to be enabled.
  *
- * @link http://www.php.net/manual/en/ref.pdo-sqlsrv.php
- *
- * @package       Cake.Model.Datasource.Database
+ * @package       Cake.Plugin.Model.Datasource.Database
  */
 class Sybase extends DboSource {
 
@@ -72,13 +63,11 @@ class Sybase extends DboSource {
  * @var array
  */
 	protected $_baseConfig = array(
-		'persistent' => true,
-		'host' => 'localhost\SQLEXPRESS',
+		'host' => '',
 		'login' => '',
 		'password' => '',
 		'database' => 'cake',
 		'schema' => '',
-		'flags' => array()
 	);
 
 /**
@@ -122,15 +111,6 @@ class Sybase extends DboSource {
 
 		$config = $this->config;
 		$this->connected = false;
-
-		$flags = $config['flags'] + array(
-			PDO::ATTR_PERSISTENT => $config['persistent'],
-			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-		);
-
-		if (!empty($config['encoding'])) {
-			$flags[PDO::SQLSRV_ATTR_ENCODING] = $config['encoding'];
-		}
 
 		try {
 			$this->_connection = new PDO(
