@@ -1,0 +1,33 @@
+{
+  "name": "cpierce/cakephp-sybasedb",
+  "description": "CakePHP plugin to handle PDO MSSQL Connections using dblib",
+  "type": "cakephp-plugin",
+  "keywords": [
+    "cakephp",
+    "MSSQL",
+    "Sybase",
+    "PDO",
+    "dblib"
+  ],
+  "homepage": "http://github.com/cpierce/microsoft-sql-pdo-for-cakephp-2.x",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Chris Pierce",
+      "email": "cpierce@csdurant.com",
+      "homepage": "http://www.cpierce.org",
+      "role": "Maintainer"
+    }
+  ],
+  "require": {
+    "composer/installers": "*"
+  },
+  "support": {
+    "email": "support@csdurant.com",
+    "issues": "https://github.com/cpierce/microsoft-sql-pdo-for-cakephp-2.x/issues",
+    "source": "https://github.com/cpierce/microsoft-sql-pdo-for-cakephp-2.x"
+  },
+  "extra": {
+    "installer-name": "SybaseDB"
+  }
+}
