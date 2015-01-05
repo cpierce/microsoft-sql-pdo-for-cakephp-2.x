@@ -1,5 +1,5 @@
 {
-  "name": "cpierce/cakephp-paypalwpp",
+  "name": "cpierce/cakephp-sybasedb",
   "description": "CakePHP plugin to handle PDO MSSQL Connections using dblib",
   "type": "cakephp-plugin",
   "keywords": [
