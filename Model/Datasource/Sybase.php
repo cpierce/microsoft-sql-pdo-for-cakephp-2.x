@@ -26,21 +26,21 @@ class Sybase extends DboSource {
  *
  * @var string
  */
-	public $description = "Sybase DBO Driver";
+	public $description = 'Sybase DBO Driver';
 
 /**
  * Starting quote character for quoted identifiers
  *
  * @var string
  */
-	public $startQuote = "[";
+	public $startQuote = '[';
 
 /**
  * Ending quote character for quoted identifiers
  *
  * @var string
  */
-	public $endQuote = "]";
+	public $endQuote = ']';
 
 /**
  * Creates a map between field aliases and numeric indexes. Workaround for the
@@ -154,7 +154,7 @@ class Sybase extends DboSource {
 		if ($cache !== null) {
 			return $cache;
 		}
-		$result = $this->_execute("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES");
+		$result = $this->_execute('SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES');
 
 		if (!$result) {
 			$result->closeCursor();
@@ -522,7 +522,7 @@ class Sybase extends DboSource {
 					return trim("SELECT {$fields} FROM {$table} {$alias} {$joins} {$conditions} {$group} {$order} {$limit}");
 				}
 				return trim("SELECT {$limit} {$fields} FROM {$table} {$alias} {$joins} {$conditions} {$group} {$order}");
-			case "schema":
+			case 'schema':
 				extract($data);
 
 				foreach ($indexes as $i => $index) {
