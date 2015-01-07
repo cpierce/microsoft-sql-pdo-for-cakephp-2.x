@@ -21,47 +21,47 @@ App::uses('DboSource', 'Model/Datasource');
  */
 class Sybase extends DboSource {
 
-/**
- * Driver description
- *
- * @var string
- */
+    /**
+     * Driver description
+     *
+     * @var string
+     */
 	public $description = 'Sybase DBO Driver';
 
-/**
- * Starting quote character for quoted identifiers
- *
- * @var string
- */
+    /**
+     * Starting quote character for quoted identifiers
+     *
+     * @var string
+     */
 	public $startQuote = '[';
 
-/**
- * Ending quote character for quoted identifiers
- *
- * @var string
- */
+    /**
+     * Ending quote character for quoted identifiers
+     *
+     * @var string
+     */
 	public $endQuote = ']';
 
-/**
- * Creates a map between field aliases and numeric indexes. Workaround for the
- * SQL Server driver's 30-character column name limitation.
- *
- * @var array
- */
+    /**
+     * Creates a map between field aliases and numeric indexes. Workaround for the
+     * SQL Server driver's 30-character column name limitation.
+     *
+     * @var array
+     */
 	protected $_fieldMappings = array();
 
-/**
- * Storing the last affected value
- *
- * @var mixed
- */
+    /**
+     * Storing the last affected value
+     *
+     * @var mixed
+     */
 	protected $_lastAffected = false;
 
-/**
- * Base configuration settings for MS SQL driver
- *
- * @var array
- */
+    /**
+     * Base configuration settings for MS SQL driver
+     *
+     * @var array
+     */
 	protected $_baseConfig = array(
 		'host' => '',
 		'login' => '',
@@ -70,11 +70,11 @@ class Sybase extends DboSource {
 		'schema' => '',
 	);
 
-/**
- * MS SQL column definition
- *
- * @var array
- */
+    /**
+     * MS SQL column definition
+     *
+     * @var array
+     */
 	public $columns = array(
 		'primary_key' => array('name' => 'IDENTITY (1, 1) NOT NULL'),
 		'string' => array('name' => 'nvarchar', 'limit' => '255'),
@@ -93,20 +93,20 @@ class Sybase extends DboSource {
 		'boolean' => array('name' => 'bit')
 	);
 
-/**
- * Magic column name used to provide pagination support for SQLServer 2008
- * which lacks proper limit/offset support.
- *
- * @var string
- */
+    /**
+     * Magic column name used to provide pagination support for SQLServer 2008
+     * which lacks proper limit/offset support.
+     *
+     * @var string
+     */
 	const ROW_COUNTER = '_cake_page_rownum_';
 
-/**
- * Connects to the database using options in the given configuration array.
- *
- * @return bool True if the database could be connected, else false
- * @throws MissingConnectionException
- */
+    /**
+     * Connects to the database using options in the given configuration array.
+     *
+     * @return bool True if the database could be connected, else false
+     * @throws MissingConnectionException
+     */
 	public function connect() {
 
 		$config = $this->config;
@@ -134,21 +134,21 @@ class Sybase extends DboSource {
 		return $this->connected;
 	}
 
-/**
- * Check that PDO SQL Server is installed/loaded
- *
- * @return bool
- */
+    /**
+     * Check that PDO SQL Server is installed/loaded
+     *
+     * @return bool
+     */
 	public function enabled() {
 		return in_array('dblib', PDO::getAvailableDrivers());
 	}
 
-/**
- * Returns an array of sources (tables) in the database.
- *
- * @param mixed $data The names
- * @return array Array of table names in the database
- */
+    /**
+     * Returns an array of sources (tables) in the database.
+     *
+     * @param mixed $data The names
+     * @return array Array of table names in the database
+     */
 	public function listSources($data = null) {
 		$cache = parent::listSources();
 		if ($cache !== null) {
@@ -171,13 +171,13 @@ class Sybase extends DboSource {
 		return $tables;
 	}
 
-/**
- * Returns an array of the fields in given table name.
- *
- * @param Model|string $model Model object to describe, or a string table name.
- * @return array Fields in table. Keys are name and type
- * @throws CakeException
- */
+    /**
+     * Returns an array of the fields in given table name.
+     *
+     * @param Model|string $model Model object to describe, or a string table name.
+     * @return array Fields in table. Keys are name and type
+     * @throws CakeException
+     */
 	public function describe($model) {
 		$table = $this->fullTableName($model, false, false);
 		$fulltable = $this->fullTableName($model, false, true);
@@ -246,15 +246,15 @@ class Sybase extends DboSource {
 		return $fields;
 	}
 
-/**
- * Generates the fields list of an SQL query.
- *
- * @param Model $model The model to get fields for.
- * @param string $alias Alias table name
- * @param array $fields The fields so far.
- * @param bool $quote Whether or not to quote identfiers.
- * @return array
- */
+    /**
+     * Generates the fields list of an SQL query.
+     *
+     * @param Model $model The model to get fields for.
+     * @param string $alias Alias table name
+     * @param array $fields The fields so far.
+     * @param bool $quote Whether or not to quote identfiers.
+     * @return array
+     */
 	public function fields(Model $model, $alias = null, $fields = array(), $quote = true) {
 		if (empty($alias)) {
 			$alias = $model->alias;
@@ -313,16 +313,16 @@ class Sybase extends DboSource {
 		return $fields;
 	}
 
-/**
- * Generates and executes an SQL INSERT statement for given model, fields, and values.
- * Removes Identity (primary key) column from update data before returning to parent, if
- * value is empty.
- *
- * @param Model $model The model to insert into.
- * @param array $fields The fields to set.
- * @param array $values The values to set.
- * @return array
- */
+    /**
+     * Generates and executes an SQL INSERT statement for given model, fields, and values.
+     * Removes Identity (primary key) column from update data before returning to parent, if
+     * value is empty.
+     *
+     * @param Model $model The model to insert into.
+     * @param array $fields The fields to set.
+     * @param array $values The values to set.
+     * @return array
+     */
 	public function create(Model $model, $fields = null, $values = null) {
 		if (!empty($values)) {
 			$fields = array_combine($fields, $values);
@@ -343,16 +343,16 @@ class Sybase extends DboSource {
 		return $result;
 	}
 
-/**
- * Generates and executes an SQL UPDATE statement for given model, fields, and values.
- * Removes Identity (primary key) column from update data before returning to parent.
- *
- * @param Model $model The model to update.
- * @param array $fields The fields to set.
- * @param array $values The values to set.
- * @param mixed $conditions The conditions to use.
- * @return array
- */
+    /**
+     * Generates and executes an SQL UPDATE statement for given model, fields, and values.
+     * Removes Identity (primary key) column from update data before returning to parent.
+     *
+     * @param Model $model The model to update.
+     * @param array $fields The fields to set.
+     * @param array $values The values to set.
+     * @param mixed $conditions The conditions to use.
+     * @return array
+     */
 	public function update(Model $model, $fields = array(), $values = null, $conditions = null) {
 		if (!empty($values)) {
 			$fields = array_combine($fields, $values);
@@ -366,13 +366,13 @@ class Sybase extends DboSource {
 		return parent::update($model, array_keys($fields), array_values($fields), $conditions);
 	}
 
-/**
- * Returns a limit statement in the correct format for the particular database.
- *
- * @param int $limit Limit of results returned
- * @param int $offset Offset from which to start results
- * @return string SQL limit/offset statement
- */
+    /**
+     * Returns a limit statement in the correct format for the particular database.
+     *
+     * @param int $limit Limit of results returned
+     * @param int $offset Offset from which to start results
+     * @return string SQL limit/offset statement
+     */
 	public function limit($limit, $offset = null) {
 		if ($limit) {
 			$rt = '';
@@ -388,13 +388,13 @@ class Sybase extends DboSource {
 		return null;
 	}
 
-/**
- * Converts database-layer column types to basic types
- *
- * @param mixed $real Either the string value of the fields type.
- *    or the Result object from Sqlserver::describe()
- * @return string Abstract column type (i.e. "string")
- */
+    /**
+     * Converts database-layer column types to basic types
+     *
+     * @param mixed $real Either the string value of the fields type.
+     *    or the Result object from Sqlserver::describe()
+     * @return string Abstract column type (i.e. "string")
+     */
 	public function column($real) {
 		$limit = null;
 		$col = $real;
@@ -439,13 +439,13 @@ class Sybase extends DboSource {
 		return 'text';
 	}
 
-/**
- * Handle SQLServer specific length properties.
- * SQLServer handles text types as nvarchar/varchar with a length of -1.
- *
- * @param mixed $length Either the length as a string, or a Column descriptor object.
- * @return mixed null|integer with length of column.
- */
+    /**
+     * Handle SQLServer specific length properties.
+     * SQLServer handles text types as nvarchar/varchar with a length of -1.
+     *
+     * @param mixed $length Either the length as a string, or a Column descriptor object.
+     * @return mixed null|integer with length of column.
+     */
 	public function length($length) {
 		if (is_object($length) && isset($length->Length)) {
 			if ($length->Length == -1 && strpos($length->Type, 'char') !== false) {
@@ -459,12 +459,12 @@ class Sybase extends DboSource {
 		return parent::length($length);
 	}
 
-/**
- * Builds a map of the columns contained in a result
- *
- * @param PDOStatement $results The result to modify.
- * @return void
- */
+    /**
+     * Builds a map of the columns contained in a result
+     *
+     * @param PDOStatement $results The result to modify.
+     * @return void
+     */
 	public function resultSet($results) {
 		$this->map = array();
 		$numFields = $results->columnCount();
@@ -495,13 +495,13 @@ class Sybase extends DboSource {
 		}
 	}
 
-/**
- * Builds final SQL statement
- *
- * @param string $type Query type
- * @param array $data Query data
- * @return string
- */
+    /**
+     * Builds final SQL statement
+     *
+     * @param string $type Query type
+     * @param array $data Query data
+     * @return string
+     */
 	public function renderStatement($type, $data) {
 		switch (strtolower($type)) {
 			case 'select':
@@ -543,13 +543,13 @@ class Sybase extends DboSource {
 		}
 	}
 
-/**
- * Returns a quoted and escaped string of $data for use in an SQL statement.
- *
- * @param string $data String to be prepared for use in an SQL statement
- * @param string $column The column into which this data will be inserted
- * @return string Quoted and escaped data
- */
+    /**
+     * Returns a quoted and escaped string of $data for use in an SQL statement.
+     *
+     * @param string $data String to be prepared for use in an SQL statement
+     * @param string $column The column into which this data will be inserted
+     * @return string Quoted and escaped data
+     */
 	public function value($data, $column = null) {
 		if ($data === null || is_array($data) || is_object($data)) {
 			return parent::value($data, $column);
@@ -571,27 +571,27 @@ class Sybase extends DboSource {
 		}
 	}
 
-/**
- * Returns an array of all result rows for a given SQL query.
- * Returns false if no rows matched.
- *
- * @param Model $model The model to read from
- * @param array $queryData The query data
- * @param int $recursive How many layers to go.
- * @return array|false Array of resultset rows, or false if no rows matched
- */
+    /**
+     * Returns an array of all result rows for a given SQL query.
+     * Returns false if no rows matched.
+     *
+     * @param Model $model The model to read from
+     * @param array $queryData The query data
+     * @param int $recursive How many layers to go.
+     * @return array|false Array of resultset rows, or false if no rows matched
+     */
 	public function read(Model $model, $queryData = array(), $recursive = null) {
 		$results = parent::read($model, $queryData, $recursive);
 		$this->_fieldMappings = array();
 		return $results;
 	}
 
-/**
- * Fetches the next row from the current result set.
- * Eats the magic ROW_COUNTER variable.
- *
- * @return mixed
- */
+    /**
+     * Fetches the next row from the current result set.
+     * Eats the magic ROW_COUNTER variable.
+     *
+     * @return mixed
+     */
 	public function fetchResult() {
 		if ($row = $this->_result->fetch(PDO::FETCH_NUM)) {
 			$resultRow = array();
@@ -613,14 +613,14 @@ class Sybase extends DboSource {
 		return false;
 	}
 
-/**
- * Inserts multiple values into a table
- *
- * @param string $table The table to insert into.
- * @param string $fields The fields to set.
- * @param array $values The values to set.
- * @return void
- */
+    /**
+     * Inserts multiple values into a table
+     *
+     * @param string $table The table to insert into.
+     * @param string $fields The fields to set.
+     * @param array $values The values to set.
+     * @return void
+     */
 	public function insertMulti($table, $fields, $values) {
 		$primaryKey = $this->_getPrimaryKey($table);
 		$hasPrimaryKey = $primaryKey && (
@@ -639,14 +639,14 @@ class Sybase extends DboSource {
 		}
 	}
 
-/**
- * Generate a database-native column schema string
- *
- * @param array $column An array structured like the
- *   following: array('name'=>'value', 'type'=>'value'[, options]),
- *   where options can be 'default', 'length', or 'key'.
- * @return string
- */
+    /**
+     * Generate a database-native column schema string
+     *
+     * @param array $column An array structured like the
+     *   following: array('name'=>'value', 'type'=>'value'[, options]),
+     *   where options can be 'default', 'length', or 'key'.
+     * @return string
+     */
 	public function buildColumn($column) {
 		$result = parent::buildColumn($column);
 		$result = preg_replace('/(bigint|int|integer)\([0-9]+\)/i', '$1', $result);
@@ -665,13 +665,13 @@ class Sybase extends DboSource {
 		return $result;
 	}
 
-/**
- * Format indexes for create table
- *
- * @param array $indexes The indexes to build
- * @param string $table The table to make indexes for.
- * @return string
- */
+    /**
+     * Format indexes for create table
+     *
+     * @param array $indexes The indexes to build
+     * @param string $table The table to make indexes for.
+     * @return string
+     */
 	public function buildIndex($indexes, $table = null) {
 		$join = array();
 
@@ -693,12 +693,12 @@ class Sybase extends DboSource {
 		return $join;
 	}
 
-/**
- * Makes sure it will return the primary key
- *
- * @param Model|string $model Model instance of table name
- * @return string
- */
+    /**
+     * Makes sure it will return the primary key
+     *
+     * @param Model|string $model Model instance of table name
+     * @return string
+     */
 	protected function _getPrimaryKey($model) {
 		$schema = $this->describe($model);
 		foreach ($schema as $field => $props) {
@@ -709,13 +709,13 @@ class Sybase extends DboSource {
 		return null;
 	}
 
-/**
- * Returns number of affected rows in previous database operation. If no previous operation exists,
- * this returns false.
- *
- * @param mixed $source Unused
- * @return int Number of affected rows
- */
+    /**
+     * Returns number of affected rows in previous database operation. If no previous operation exists,
+     * this returns false.
+     *
+     * @param mixed $source Unused
+     * @return int Number of affected rows
+     */
 	public function lastAffected($source = null) {
 		$affected = parent::lastAffected();
 		if ($affected === null && $this->_lastAffected !== false) {
@@ -724,16 +724,16 @@ class Sybase extends DboSource {
 		return $affected;
 	}
 
-/**
- * Executes given SQL statement.
- *
- * @param string $sql SQL statement
- * @param array $params list of params to be bound to query (supported only in select)
- * @param array $prepareOptions Options to be used in the prepare statement
- * @return mixed PDOStatement if query executes with no problem, true as the result of a successful, false on error
- * query returning no rows, such as a CREATE statement, false otherwise
- * @throws PDOException
- */
+    /**
+     * Executes given SQL statement.
+     *
+     * @param string $sql SQL statement
+     * @param array $params list of params to be bound to query (supported only in select)
+     * @param array $prepareOptions Options to be used in the prepare statement
+     * @return mixed PDOStatement if query executes with no problem, true as the result of a successful, false on error
+     * query returning no rows, such as a CREATE statement, false otherwise
+     * @throws PDOException
+     */
 	protected function _execute($sql, $params = array(), $prepareOptions = array()) {
 		$this->_lastAffected = false;
 		$sql = trim($sql);
@@ -761,21 +761,21 @@ class Sybase extends DboSource {
 		}
 	}
 
-/**
- * Generate a "drop table" statement for the given table
- *
- * @param type $table Name of the table to drop
- * @return string Drop table SQL statement
- */
+    /**
+     * Generate a "drop table" statement for the given table
+     *
+     * @param type $table Name of the table to drop
+     * @return string Drop table SQL statement
+     */
 	protected function _dropTable($table) {
 		return "IF OBJECT_ID('" . $this->fullTableName($table, false) . "', 'U') IS NOT NULL DROP TABLE " . $this->fullTableName($table) . ";";
 	}
 
-/**
- * Gets the schema name
- *
- * @return string The schema name
- */
+    /**
+     * Gets the schema name
+     *
+     * @return string The schema name
+     */
 	public function getSchemaName() {
 		return $this->config['schema'];
 	}
