@@ -601,7 +601,8 @@ class Sybase extends DboSource {
 				if ($table === 0 && $column === self::ROW_COUNTER) {
 					continue;
 				}
-				$resultRow[$table][$column] = $row[$col];
+				// cleans the information up a bit by trimming off trailing and leading spaces
+				$resultRow[$table][$column] = trim($row[$col]);
 				if ($type === 'boolean' && $row[$col] !== null) {
 					$resultRow[$table][$column] = $this->boolean($resultRow[$table][$column]);
 				}
