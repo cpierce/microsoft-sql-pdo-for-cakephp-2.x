@@ -59,5 +59,5 @@ Some of the code used was taken from the CakePHP SQLServer DBO for Microsoft Win
 #### Change Log ####
 Version 0.2b
 * New mapping protocol thanks to version of SQL working in system now
-* Tested (create, update, select, delete, contain, list, count, paginate, first, and all)
+* Tested (save, delete, find('count', 'list', 'all', 'first', 'contain'), paginate, hasMany, belongsTo, etc.
 * Must specify $primaryKey for non "id" primary keys
