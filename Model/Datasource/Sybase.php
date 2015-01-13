@@ -474,23 +474,28 @@ class Sybase extends DboSource {
 		$numFields = $results->columnCount();
 		$index = 0;
 
-		while ($numFields-- > 0) {
-			$column = $results->getColumnMeta($index);
-			$name = $column['name'];
+		$mappings = array();
+		foreach ($this->_fieldMappings as $db=>$object) {
+			$mappings[] = array(
+				'db' => $db,
+				'obj' => $object,
+			);
+		}
 
-			if (strpos($name, '__')) {
-				if (isset($this->_fieldMappings[$name]) && strpos($this->_fieldMappings[$name], '.')) {
-					$map = explode('.', $this->_fieldMappings[$name]);
-				} elseif (isset($this->_fieldMappings[$name])) {
-					$map = array(0, $this->_fieldMappings[$name]);
-				} else {
-					$map = array(0, $name);
-				}
-			} else {
-				$map = array(0, $name);
+		while ($numFields-- > 0) {
+			if (!empty($mappings[$index])) {
+				$info = preg_split("/\./", $mappings[$index]['obj']);
+				$model = $info[0];
+				$field = $info[1];
+				$type = 'NVARCHAR';
+				$tmp = array(
+					$model,
+					$field,
+					$type,
+				);
+				$this->map[$index] = $tmp;
+				$index++;
 			}
-			$map[] = $column['native_type'];
-			$this->map[$index++] = $map;
 		}
 	}
 
@@ -535,7 +540,6 @@ class Sybase extends DboSource {
 					";
 					return trim($sql);
 				}
-
 				if (strpos($limit, 'FETCH') !== false) {
 					return trim("SELECT {$fields} FROM {$table} {$alias} {$joins} {$conditions} {$group} {$order} {$limit}");
 				}
