@@ -1,4 +1,4 @@
-# SybaseDB 0.2b #
+# SybaseDB 0.3b #
 
 Creates a PDO connection to MSSql server through Sybase dblib as a plugin for CakePHP 2.x
 
@@ -57,6 +57,9 @@ From here you can now access the data the normal cakePHP way:
 Some of the code used was taken from the CakePHP SQLServer DBO for Microsoft Windows and altered to fit the PDO DBlib
 
 #### Change Log ####
+Version 0.3b
+* Fixed a problem with long table cell names (over 30 characters).
+
 Version 0.2b
 * New mapping protocol thanks to version of SQL working in system now
 * Tested (save, delete, find('count', 'list', 'all', 'first', 'contain'), paginate, hasMany, belongsTo, etc.
