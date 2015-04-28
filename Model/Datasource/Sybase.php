@@ -474,28 +474,23 @@ class Sybase extends DboSource {
 		$numFields = $results->columnCount();
 		$index = 0;
 
-		$mappings = array();
-		foreach ($this->_fieldMappings as $db=>$object) {
-			$mappings[] = array(
-				'db' => $db,
-				'obj' => $object,
-			);
-		}
-
 		while ($numFields-- > 0) {
-			if (!empty($mappings[$index])) {
-				$info = preg_split("/\./", $mappings[$index]['obj']);
-				$model = $info[0];
-				$field = $info[1];
-				$type = 'NVARCHAR';
-				$tmp = array(
-					$model,
-					$field,
-					$type,
-				);
-				$this->map[$index] = $tmp;
-				$index++;
+			$column = $results->getColumnMeta($index);
+			$name = $column['name'];
+
+			if (strpos($name, '__')) {
+				if (isset($this->_fieldMappings[$name]) && strpos($this->_fieldMappings[$name], '.')) {
+					$map = explode('.', $this->_fieldMappings[$name]);
+				} elseif (isset($this->_fieldMappings[$name])) {
+					$map = array(0, $this->_fieldMappings[$name]);
+				} else {
+					$map = array(0, $name);
+				}
+			} else {
+				$map = array(0, $name);
 			}
+			$map[] = $column['native_type'];
+			$this->map[$index++] = $map;
 		}
 	}
 
@@ -760,7 +755,7 @@ class Sybase extends DboSource {
 		$sql = trim($sql);
 		if (strncasecmp($sql, 'SELECT', 6) === 0 || preg_match('/^EXEC(?:UTE)?\s/mi', $sql) > 0) {
 			$prepareOptions += array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL);
-			
+
 			return parent::_execute($sql, $params, $prepareOptions);
 		}
 		try {
@@ -800,7 +795,7 @@ class Sybase extends DboSource {
 	public function getSchemaName() {
 		return $this->config['schema'];
 	}
-	
+
 	/**
      * Gets the SQL Version Number and overrides the parent getVersion();
      *
@@ -809,11 +804,11 @@ class Sybase extends DboSource {
     protected function setVersion() {
         $version = $this->_execute('SELECT SERVERPROPERTY(\'productversion\') AS version');
         $ver = $version->fetch(PDO::FETCH_NUM);
-        $this->_serverVersion = $ver[0];   
+        $this->_serverVersion = $ver[0];
     }
-    
+
     public function getVersion() {
-        return $this->_serverVersion;   
+        return $this->_serverVersion;
     }
 
 }
