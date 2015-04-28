@@ -112,6 +112,7 @@ class Sybase extends DboSource {
      * Connects to the database using options in the given configuration array.
      *
      * @return bool True if the database could be connected, else false
+     *
      * @throws MissingConnectionException
      */
 	public function connect() {
@@ -143,6 +144,8 @@ class Sybase extends DboSource {
     /**
      * Check that PDO SQL Server is installed/loaded
      *
+     * @param void
+     *
      * @return bool
      */
 	public function enabled() {
@@ -153,6 +156,7 @@ class Sybase extends DboSource {
      * Returns an array of sources (tables) in the database.
      *
      * @param mixed $data The names
+     *
      * @return array Array of table names in the database
      */
 	public function listSources($data = null) {
@@ -181,7 +185,9 @@ class Sybase extends DboSource {
      * Returns an array of the fields in given table name.
      *
      * @param Model|string $model Model object to describe, or a string table name.
+     *
      * @return array Fields in table. Keys are name and type
+     *
      * @throws CakeException
      */
 	public function describe($model) {
@@ -257,6 +263,7 @@ class Sybase extends DboSource {
      * @param string $alias Alias table name
      * @param array $fields The fields so far.
      * @param bool $quote Whether or not to quote identfiers.
+     *
      * @return array
      */
 	public function fields(Model $model, $alias = null, $fields = array(), $quote = true) {
@@ -325,6 +332,7 @@ class Sybase extends DboSource {
      * @param Model $model The model to insert into.
      * @param array $fields The fields to set.
      * @param array $values The values to set.
+     *
      * @return array
      */
 	public function create(Model $model, $fields = null, $values = null) {
@@ -355,6 +363,7 @@ class Sybase extends DboSource {
      * @param array $fields The fields to set.
      * @param array $values The values to set.
      * @param mixed $conditions The conditions to use.
+     *
      * @return array
      */
 	public function update(Model $model, $fields = array(), $values = null, $conditions = null) {
@@ -375,6 +384,7 @@ class Sybase extends DboSource {
      *
      * @param int $limit Limit of results returned
      * @param int $offset Offset from which to start results
+     *
      * @return string SQL limit/offset statement
      */
 	public function limit($limit, $offset = null) {
@@ -397,6 +407,7 @@ class Sybase extends DboSource {
      *
      * @param mixed $real Either the string value of the fields type.
      *    or the Result object from Sqlserver::describe()
+     *
      * @return string Abstract column type (i.e. "string")
      */
 	public function column($real) {
@@ -445,9 +456,11 @@ class Sybase extends DboSource {
 
     /**
      * Handle SQLServer specific length properties.
+     *
      * SQLServer handles text types as nvarchar/varchar with a length of -1.
      *
      * @param mixed $length Either the length as a string, or a Column descriptor object.
+     *
      * @return mixed null|integer with length of column.
      */
 	public function length($length) {
@@ -467,6 +480,7 @@ class Sybase extends DboSource {
      * Builds a map of the columns contained in a result
      *
      * @param PDOStatement $results The result to modify.
+     *
      * @return void
      */
 	public function resultSet($results) {
@@ -499,6 +513,7 @@ class Sybase extends DboSource {
      *
      * @param string $type Query type
      * @param array $data Query data
+     *
      * @return string
      */
 	public function renderStatement($type, $data) {
@@ -565,6 +580,7 @@ class Sybase extends DboSource {
      *
      * @param string $data String to be prepared for use in an SQL statement
      * @param string $column The column into which this data will be inserted
+     *
      * @return string Quoted and escaped data
      */
 	public function value($data, $column = null) {
@@ -590,11 +606,13 @@ class Sybase extends DboSource {
 
     /**
      * Returns an array of all result rows for a given SQL query.
+     *
      * Returns false if no rows matched.
      *
      * @param Model $model The model to read from
      * @param array $queryData The query data
      * @param int $recursive How many layers to go.
+     *
      * @return array|false Array of resultset rows, or false if no rows matched
      */
 	public function read(Model $model, $queryData = array(), $recursive = null) {
@@ -635,6 +653,7 @@ class Sybase extends DboSource {
      * @param string $table The table to insert into.
      * @param string $fields The fields to set.
      * @param array $values The values to set.
+     *
      * @return void
      */
 	public function insertMulti($table, $fields, $values) {
@@ -661,6 +680,7 @@ class Sybase extends DboSource {
      * @param array $column An array structured like the
      *   following: array('name'=>'value', 'type'=>'value'[, options]),
      *   where options can be 'default', 'length', or 'key'.
+     *
      * @return string
      */
 	public function buildColumn($column) {
@@ -686,6 +706,7 @@ class Sybase extends DboSource {
      *
      * @param array $indexes The indexes to build
      * @param string $table The table to make indexes for.
+     *
      * @return string
      */
 	public function buildIndex($indexes, $table = null) {
@@ -713,6 +734,7 @@ class Sybase extends DboSource {
      * Makes sure it will return the primary key
      *
      * @param Model|string $model Model instance of table name
+     *
      * @return string
      */
 	protected function _getPrimaryKey($model) {
@@ -730,6 +752,7 @@ class Sybase extends DboSource {
      * this returns false.
      *
      * @param mixed $source Unused
+     *
      * @return int Number of affected rows
      */
 	public function lastAffected($source = null) {
@@ -746,8 +769,10 @@ class Sybase extends DboSource {
      * @param string $sql SQL statement
      * @param array $params list of params to be bound to query (supported only in select)
      * @param array $prepareOptions Options to be used in the prepare statement
+     *
      * @return mixed PDOStatement if query executes with no problem, true as the result of a successful, false on error
      * query returning no rows, such as a CREATE statement, false otherwise
+     *
      * @throws PDOException
      */
 	protected function _execute($sql, $params = array(), $prepareOptions = array()) {
@@ -781,6 +806,7 @@ class Sybase extends DboSource {
      * Generate a "drop table" statement for the given table
      *
      * @param type $table Name of the table to drop
+     *
      * @return string Drop table SQL statement
      */
 	protected function _dropTable($table) {
@@ -799,7 +825,9 @@ class Sybase extends DboSource {
 	/**
      * Gets the SQL Version Number and overrides the parent getVersion();
      *
-     * @return string The SQL version
+     * @param void
+     *
+     * @return void
      */
     protected function setVersion() {
         $version = $this->_execute('SELECT SERVERPROPERTY(\'productversion\') AS version');
@@ -807,6 +835,13 @@ class Sybase extends DboSource {
         $this->_serverVersion = $ver[0];
     }
 
+	/**
+	 * Get Version Method
+	 *
+	 * @param void
+	 *
+	 * @return string The SQL Version
+	 */
     public function getVersion() {
         return $this->_serverVersion;
     }
