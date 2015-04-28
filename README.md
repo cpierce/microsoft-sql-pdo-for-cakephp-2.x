@@ -17,14 +17,14 @@ of them so after hours of research the birth of this plugin was planned.  A few 
 
 Download the package zipball/tarball and unzip to the `app/Plugin` folder.
 
-Rename the folder you copied in to `SybaseDB` 
+Rename the folder you copied in to `SybaseDB`
 
 Enable the Plugin in your `app/Config/bootstrap.php` file:
 
     <?php
     CakePlugin::load('SybaseDB');
 
-    
+
 If you are already using `CakePlugin::loadAll();`, then this step is not necessary.
 
 Configure a database connection in `app/Config/database.php` file:
@@ -50,11 +50,12 @@ From here you can now access the data the normal cakePHP way:
     <?php
         $this->Model->find('first');
 
-        
+
 
 ### Credit where it is due ###
 
-Some of the code used was taken from the CakePHP SQLServer DBO for Microsoft Windows and altered to fit the PDO DBlib
+Some of the code used was taken from the CakePHP SQLServer DBO for Microsoft Windows and altered to fit the PDO DBlib.  Special
+thanks to the people who have used this and helped me test it (Especially Jeffery Bell and Marcel Wedel)
 
 #### Change Log ####
 Version 0.3b
