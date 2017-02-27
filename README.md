@@ -15,9 +15,11 @@ of them so after hours of research the birth of this plugin was planned.  A few 
 
 ### How to use the plugin ###
 
-Download the package zipball/tarball and unzip to the `app/Plugin` folder.
+Update your `composer.json` file using the following:
 
-Rename the folder you copied in to `SybaseDB`
+```
+composer require cpierce/cakephp-sybasedb
+```
 
 Enable the Plugin in your `app/Config/bootstrap.php` file:
 
