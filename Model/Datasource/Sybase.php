@@ -583,7 +583,7 @@ class Sybase extends DboSource {
      *
      * @return string Quoted and escaped data
      */
-	public function value($data, $column = null) {
+	public function value($data, $column = null, $null = true) {
 		if ($data === null || is_array($data) || is_object($data)) {
 			return parent::value($data, $column);
 		}
