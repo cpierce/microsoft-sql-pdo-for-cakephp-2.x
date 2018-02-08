@@ -580,6 +580,7 @@ class Sybase extends DboSource {
      *
      * @param string $data String to be prepared for use in an SQL statement
      * @param string $column The column into which this data will be inserted
+     * @param bool $null Column allows NULL values
      *
      * @return string Quoted and escaped data
      */
@@ -600,7 +601,7 @@ class Sybase extends DboSource {
 			case 'text':
 				return 'N' . $this->_connection->quote($data, PDO::PARAM_STR);
 			default:
-				return parent::value($data, $column);
+				return parent::value($data, $column, $null);
 		}
 	}
 
