@@ -27,7 +27,7 @@
     "phpunit/phpunit": ">=5.6.3"
   },
   "support": {
-    "email": "support@csdurant.com",
+    "email": "cpierce@csdurant.com",
     "issues": "https://github.com/cpierce/microsoft-sql-pdo-for-cakephp-2.x/issues",
     "source": "https://github.com/cpierce/microsoft-sql-pdo-for-cakephp-2.x"
   },
